@@ -2,14 +2,257 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vue-demo</title>
-    <script type="module" crossorigin src="/assets/index-a3cfe7ee.js"></script>
-    <link rel="stylesheet" href="/assets/index-c9062790.css">
+    <title>vue-demo - 探索世界</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      #app {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #4CAF50, #2196F3);
+        color: white;
+        padding: 1rem 2rem;
+        text-align: center;
+      }
+
+      .header h1 {
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: background 0.3s;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      .nav a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .nav a.active {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .footer {
+        background: #333;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        margin-top: auto;
+      }
+
+      .home-content {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      .destination-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 2rem 0;
+      }
+
+      .destination-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .destination-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      }
+
+      .attractions-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .attractions-list li {
+        background: #f5f5f5;
+        margin: 1rem 0;
+        padding: 1rem;
+        border-radius: 4px;
+        border-left: 4px solid #2196F3;
+      }
+
+      .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.8;
+      }
+
+      .about-content h2 {
+        color: #2196F3;
+        margin: 2rem 0 1rem 0;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    
+    <div id="app">
+      <header class="header">
+        <h1>探索世界</h1>
+        <nav class="nav">
+          <a href="#" @click="currentPage = 'home'" :class="{ active: currentPage === 'home' }">首页</a>
+          <a href="#" @click="currentPage = 'destinations'" :class="{ active: currentPage === 'destinations' }">热门目的地</a>
+          <a href="#" @click="currentPage = 'attractions'" :class="{ active: currentPage === 'attractions' }">景点推荐</a>
+          <a href="#" @click="currentPage = 'about'" :class="{ active: currentPage === 'about' }">关于我们</a>
+        </nav>
+      </header>
+      
+      <main class="main-content">
+        <!-- 首页 -->
+        <div v-if="currentPage === 'home'" class="home-content">
+          <h2 style="color: #2196F3; margin-bottom: 1rem;">欢迎来到探索世界</h2>
+          <p style="font-size: 1.2rem; margin-bottom: 2rem;">发现地球上最美的风景，开启难忘的旅程</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+            <div style="text-align: center; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
+              <h3 style="color: #4CAF50;">🌍 全球目的地</h3>
+              <p>覆盖200+国家和地区的精选目的地</p>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
+              <h3 style="color: #2196F3;">🎯 专业定制</h3>
+              <p>根据您的喜好量身定制旅行方案</p>
+            </div>
+            <div style="text-align: center; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
+              <h3 style="color: #FF9800;">🏆 优质服务</h3>
+              <p>24/7全天候客户服务支持</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 热门目的地 -->
+        <div v-if="currentPage === 'destinations'">
+          <h2 style="text-align: center; color: #2196F3; margin-bottom: 2rem;">热门目的地</h2>
+          <div class="destination-grid">
+            <div class="destination-card">
+              <h3 style="color: #4CAF50;">🗼 东京</h3>
+              <p>现代与传统完美融合的国际大都市</p>
+              <p><strong>最佳季节：</strong>春季赏樱，秋季赏枫</p>
+            </div>
+            <div class="destination-card">
+              <h3 style="color: #2196F3;">🗼 巴黎</h3>
+              <p>浪漫之都，艺术与时尚的天堂</p>
+              <p><strong>最佳季节：</strong>春夏两季</p>
+            </div>
+            <div class="destination-card">
+              <h3 style="color: #FF9800;">🏝️ 巴厘岛</h3>
+              <p>热带天堂，度假胜地首选</p>
+              <p><strong>最佳季节：</strong>4月-10月</p>
+            </div>
+            <div class="destination-card">
+              <h3 style="color: #9C27B0;">🏔️ 瑞士</h3>
+              <p>阿尔卑斯山脉的自然美景</p>
+              <p><strong>最佳季节：</strong>夏季登山，冬季滑雪</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 景点推荐 -->
+        <div v-if="currentPage === 'attractions'">
+          <h2 style="text-align: center; color: #2196F3; margin-bottom: 2rem;">景点推荐</h2>
+          <ul class="attractions-list">
+            <li>
+              <h3 style="color: #4CAF50;">🏛️ 中国长城</h3>
+              <p>世界七大奇迹之一，中华民族的象征，延绵万里的古代防御工程。</p>
+            </li>
+            <li>
+              <h3 style="color: #2196F3;">🗽 自由女神像</h3>
+              <p>美国纽约的标志性建筑，象征着自由与民主的精神。</p>
+            </li>
+            <li>
+              <h3 style="color: #FF9800;">🏛️ 泰姬陵</h3>
+              <p>印度的白色大理石陵墓，爱情的永恒象征，世界文化遗产。</p>
+            </li>
+            <li>
+              <h3 style="color: #9C27B0;">🗼 埃菲尔铁塔</h3>
+              <p>巴黎的制高点，法国文化的象征，浪漫之都的地标建筑。</p>
+            </li>
+            <li>
+              <h3 style="color: #F44336;">🏔️ 马丘比丘</h3>
+              <p>秘鲁的印加古城，悬于山巅的失落之城，神秘的考古遗址。</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 关于我们 -->
+        <div v-if="currentPage === 'about'" class="about-content">
+          <h2>关于探索世界</h2>
+          <p>探索世界成立于2015年，是一家专注于提供高品质旅行服务的在线平台。我们致力于让每一位旅行者都能发现世界的美好，创造难忘的旅行回忆。</p>
+          
+          <h2>我们的使命</h2>
+          <p>通过科技和创新，让旅行变得更加简单、安全和愉快。我们相信，旅行不仅是身体的移动，更是心灵的成长和视野的拓展。</p>
+          
+          <h2>核心价值观</h2>
+          <ul style="padding-left: 2rem;">
+            <li><strong>客户至上：</strong>以客户需求为中心，提供贴心服务</li>
+            <li><strong>专业诚信：</strong>诚实经营，专业服务</li>
+            <li><strong>创新发展：</strong>不断改进，追求卓越</li>
+            <li><strong>环保责任：</strong>倡导可持续旅游，保护地球家园</li>
+          </ul>
+          
+          <h2>联系我们</h2>
+          <p>📧 邮箱：info@exploreworld.com</p>
+          <p>📞 电话：400-123-4567</p>
+          <p>📍 地址：北京市朝阳区建国路88号</p>
+        </div>
+      </main>
+      
+      <footer class="footer">
+        <p>&copy; 2023 探索世界旅游网. 版权所有.</p>
+      </footer>
+    </div>
+
+    <script>
+      const { createApp } = Vue;
+
+      createApp({
+        data() {
+          return {
+            currentPage: 'home'
+          }
+        }
+      }).mount('#app');
+    </script>
   </body>
 </html>
